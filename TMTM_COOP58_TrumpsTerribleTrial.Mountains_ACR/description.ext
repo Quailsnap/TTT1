@@ -1,0 +1,349 @@
+//	Mission Info and Header
+
+	author = "Whale"; // Author name visible on loading screen
+	briefingName = "TTT1 - Trump's Terrible Trial V2.0"; // Name visible in mission select screen
+	overviewText = "A new, nationalized American Red Cross makes a bid for a special grant from President Trump himself by clearing a valley full of pesky insurgents in Eastern Syria. Made for TMTM, able to host ten to fifty-eight players. A COOP using DAC and Dynamic Simulation based around infantry combat in a semi-urban environment."; // Description visible in mission select screen
+	overviewPicture = "media\loadlogo.jpg"; // Image visible in mission select screen. Leave commented, still doesn't work properly.
+	onLoadName = "TTT1 - Trump's Terrible Trial"; // Name visible on loading screen
+	onLoadMission = "(V2.0) A new, nationalized American Red Cross conducts humanitarian lifesaving and people-exploding operations across southern Syria in order to impress President Trump."; // Description visible on loading screen
+	loadScreen = "media\loadlogo.jpg"; // Image visible on loading screen
+
+class Header
+{
+	gameType = COOP; // Game type, see 'class' columns in the table below
+	minPlayers = 10; //min # of players the mission supports
+	maxPlayers = 59; //max # of players the mission supports
+};
+
+// ============================================================================================
+//	Administration
+
+	enableDebugConsole = 1; // Leave this as 1
+	allowFunctionsLog = 0; // Disables functions from spamming the server RPT logs
+	allowFunctionsRecompile = 0; // Always leave this as 0
+	debriefing = 1;
+	saving = 0;
+	
+// ============================================================================================
+//	Garbage Collector
+
+	minPlayerDistance = 50; 		// 50
+	
+	corpseManagerMode = 1; 		// 1
+	corpseLimit = 30;			// 30
+	corpseRemovalMinTime = 180;	// 180
+	corpseRemovalMaxTime = 1800;// 1800
+	
+	wreckManagerMode = 1; 		// 1
+	wreckLimit = 8;				// 8
+	wreckRemovalMinTime = 360;	// 360
+	wreckRemovalMaxTime = 3600;	// 3600
+	
+// ============================================================================================
+// Miscellaneous  
+
+// Disablechannels is set below to disable voice for all channels (since we use TFAR), as well as text for non-global channels. More info here https://community.bistudio.com/wiki/Description.ext#disableChannels
+	disableChannels[] = {{0,false,true},{1,true,true},{2,true,true},{3,false,true},{4,true,true},{5,true,true}}; // Use this for COOPs
+	//disableChannels[] = {{0,false,true},{1,false,true},{2,true,true},{3,false,true},{4,true,true},{5,true,true}}; // Use this for TvTs
+	disabledAI = 0; // Disable AI in player slots (1)
+	aiKills = 0; // Don't show AI units on the leaderboards
+	enableItemsDropping = 0; // Don't drop player items when they swim
+	joinUnassigned = 1; // Don't autoslot players when they join the lobby
+	skipLobby = 0; // Change this to 1 if all players slots are the same and you want to skip the lobby screen. Needs joinUnassigned = 0;
+	showUAVFeed = 1;
+	forceRotorLibSimulation = 0; // Leave AFM choice to the player
+
+// ============================================================================================
+
+// Whale - Respawn Settings
+
+	respawn = 3;
+	respawnDelay = 160; // 160
+	respawnButton = 1;
+	respawnOnStart = -1;
+	respawnDialog = 0; 
+	respawnTemplates[] = {"Spectator"};
+	respawnTemplatesWest[] = {"Counter","Wave"}; // {"Tickets","Wave","MenuPosition","Counter"};
+
+// ============================================================================================
+
+
+// F3 - Start of Notifications block.
+
+class cfgNotifications
+{
+	// Notification Template
+	class Template
+	{
+		title = ""; // Tile displayed as text on black background. Filled by arguments.
+		iconPicture = ""; // Small icon displayed in left part. Colored by "color", filled by arguments.
+		iconText = ""; // Short text displayed over the icon. Colored by "color", filled by arguments.
+		description = ""; // Brief description displayed as structured text. Colored by "color", filled by arguments.
+		color[] = {1,1,1,1}; // Icon and text color
+		duration = 5; // How many seconds will the notification be displayed
+		priority = 0; // Priority; higher number = more important; tasks in queue are selected by priority
+		difficulty[] = {}; // Required difficulty settings. All listed difficulties has to be enabled
+	};
+
+	// A generic warning notification
+	class Alert
+	{
+		title = "ALERT";
+		description = "%1";
+		iconPicture="\A3\ui_f\data\map\markers\military\warning_ca.paa";
+		duration = 3;
+		priority = 9;
+	};
+
+	// Notifications for the F3 Safe Start Component
+	class SafeStart
+	{
+		title = "SAFE START";
+		description = "%1";
+		iconPicture="\A3\UI_F\data\IGUI\Cfg\Actions\settimer_ca.paa";
+		duration = 10;
+		priority = 0;
+	};
+	class SafeStartMissionStarting
+	{
+		title = "SAFE START";
+		description = "%1";
+		iconPicture="\A3\UI_F\data\IGUI\Cfg\Actions\settimer_ca.paa";
+		duration = 3;
+		priority = 1;
+	};
+};
+
+// ============================================================================================
+
+// F3 - Start of Params code blocks.
+// WARNING: DO NOT DELETE OR COMMENT OUT THIS CODE BLOCK
+
+class Params
+{
+	
+// ============================================================================================
+
+    class WH_param_dummy
+    {
+        title = "";
+        values[] = {0,1,2,3,4,5};
+        texts[] = {"REMINDERS: (Expand me!)","1 - Slot 8-man squads if possible, Observation should be tiny.","2 - Parameters marked with a * are the DEFAULT choices.","3 - Headless Client is not required but highly recommended.","4 - This mission can last one to two hours.","5 - Disabling PID via the param will decrease the AI if the Dynamic param is enabled."};
+        default = 0;
+    };
+
+// ============================================================================================
+
+// F3 - Radio Systems Support
+// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+
+//    class f_param_radios
+//    {
+//            title = "Radio System";
+//            values[] = {0,2,3};
+//            texts[] = {"Off","TFAR","ACRE2"};
+//            default = 2;
+//    };
+
+// ============================================================================================
+
+// F3 and DAC - Debug Modes
+// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+// WARNING: DO NOT DISABLE THIS COMPONENT
+
+    class f_param_debugMode
+    {
+        title = "$STR_f_param_debugMode";
+        values[] = {0,1};
+        texts[] = {"Off *","On"};
+        default = 0; //0
+    };
+	
+// ============================================================================================
+
+// Whale - AI Scaling
+
+	class WH_AI_Scaling
+	{
+		title = "Dynamic AI Scaling";
+		values[] = {0,2};
+		texts[] = {"Off - AI will not be scaled with player count.","On - AI will be scaled depending on player count and medical difficulty. *"};
+		default = 2; //2
+	};
+	
+// ============================================================================================
+
+// ACE - Parameter for PID
+
+	class ace_medical_preventInstaDeath 
+	{
+		title = "ACE3 Prevent Instant Death";
+		ACE_setting = 1;
+		values[] = {0,1};
+		texts[] = {"Off - Players may instantly die.","On - Players will never die instantly. *"};
+		default = 1; //1
+		force = 1;
+	};
+
+// ============================================================================================
+
+// ACE - Parameter for Medical System
+
+//	class ace_medical_level
+//	{
+//		title = "ACE3 Medical Level (Don't Touch)";
+//		values[] = {1,2};
+//		ACE_setting = 1;
+//		texts[] = {"Basic","Advanced (BROKEN)"};
+//		default = 1; //1
+//		force = 1;
+//	};
+
+// ============================================================================================
+
+// Whale - Parameter for Preplan
+
+	class WH_Mission_Preplan 
+	{
+		title = "Mission Preplanning";
+		values[] = {0,1};
+		texts[] = {"Off - Mission preplan markers will be erased AFTER misson start.","On - A decent plan will be marked on the map for the Commander to execute. *"};
+		default = 1; //1
+	};
+	
+// F3 - End of Params code blocks.
+// WARNING: DO NOT DELETE OR COMMENT OUT THIS CODE BLOCK
+
+};
+	
+// ============================================================================================
+
+// F3 - Functions
+// DO NOT REMOVE OR DISABLE THIS BLOCK OF CODE
+
+class CfgFunctions
+{
+	#include "f\common\functions.hpp"
+
+	class Xeno
+       {
+        class main
+        {
+            file = "ff";
+            class ff_logger_init
+            {
+                postInit = 1;
+            };
+            class ff_logger_handleDamage {};
+            class ff_logger_killed {};
+        };
+	};
+};		
+
+// ============================================================================================
+
+// F3 - Custom Insignia
+
+class CfgUnitInsignia {
+	#include "f\assignGear\insignia\define.hpp"
+};
+
+// ============================================================================================
+
+// Whale - AI Gear Setup
+
+class Extended_Init_EventHandlers {
+	class CAManBase {
+		init = "if (faction (_this select 0) == 'CUP_I_TK_GUE') then {_this execVM 'f\assignGear\fn_assignGearAI.sqf'};";
+	};
+};
+
+// ============================================================================================
+
+// ACE settings
+class ACE_settings {
+	// WEATHER
+	class ace_weather_enableServerController {
+		value = 0;
+		typeName = "BOOL";
+		force = 1;
+	};
+	class ace_weather_useACEWeather {
+		value = 0;
+		typeName = "BOOL";
+		force = 1;
+	};
+	class ace_weather_syncRain {
+		value = 0;
+		typeName = "BOOL";
+		force = 1;
+	};
+	class ace_weather_syncWind {
+		value = 0;
+		typeName = "BOOL";
+		force = 1;
+	};
+	class ace_weather_syncMisc {
+		value = 0;
+		typeName = "BOOL";
+		force = 1;
+	};
+	class ace_nametags_showPlayerNames {
+		value = 0;
+		typeName = "SCALAR";
+		force = 1;
+	};
+	class ace_nametags_showVehicleCrewInfo {
+		value = 0;
+		typeName = "BOOL";
+		force = 1;
+	};
+	class ace_nametags_showNamesForAI {
+		value = 0;
+		typeName = "BOOL";
+		force = 1;
+	};
+	// MEDICAL
+	//class ace_medical_enableRevive {
+	//	value = 1;
+	//	typeName = "SCALAR";
+	//	
+	//};
+};
+
+// ============================================================================================
+
+// Whale - Custom Sounds
+
+class CfgSounds
+{
+	sounds[] = {trumpspeech};
+	
+	class trumpspeech
+	{
+		name = "trumpspeech";
+		sound[] = {"media\trumpspeech.ogg", 4, 1, 300};
+		titles[] = {};
+	};
+};
+
+// ============================================================================================
+
+// Whale - Custom Debrief
+
+class CfgDebriefing
+{
+	class End1
+	{
+		title = "Victory!";
+		subtitle = "The AA nest was seized for the glory of Trump!";
+		pictureBackground = "media\victory.jpg";
+	};
+	
+	class End2
+	{
+		title = "Massive Failure.";
+		subtitle = "Your forces were wiped out. How? SAD!";
+		pictureBackground = "media\failure.jpg";
+	};
+};
