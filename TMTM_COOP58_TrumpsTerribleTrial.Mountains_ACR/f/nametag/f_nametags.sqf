@@ -1,7 +1,7 @@
 // F3 - Nametags
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
 // ====================================================================================
-
+/* NOTE -- Whale has made some changes to this code. Normally a section of the briefing is devoted to a little control menu with some cool custom stuff, but since I already had far too much in briefing I disabled it. You can re-enable it by un-commenting that huge block of code a bit down. I also added team colors into the script, and I may place group names on a separate line later. */
 // MAKE SURE THE PLAYER INITIALIZES PROPERLY
 
 if (!isDedicated && (isNull player)) then
